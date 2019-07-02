@@ -113,10 +113,15 @@ const ScreenObtainer = {
                     });
             };
         } else if (browser.isElectron()) {
+            if (browser.supportsGetDisplayMedia()) {
+                return this.obtainScreenFromGetDisplayMedia;
+            }
+
             return this.obtainScreenOnElectron;
+
         } else if (browser.isChrome() || browser.isOpera()) {
             if (browser.supportsGetDisplayMedia()
-                    && !options.desktopSharingChromeDisabled) {
+                && !options.desktopSharingChromeDisabled) {
 
                 return this.obtainScreenFromGetDisplayMedia;
             } else if (options.desktopSharingChromeDisabled
